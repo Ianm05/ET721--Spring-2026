@@ -5,17 +5,8 @@ lab 2: GIT commands
 username = input("Enter a username:")
 print(f'\nWelcome to Git commands{username}')
 
-"""
-Ian Martinez
-lab 2: GIT commands
-"""
-username = input("Enter a username:")
-print(f'\nWelcome to Git commands{username}')
-
-# testing lines 
-num = 8
-<<<<<<< HEAD
-print(f'Double of number {num} is {num * 2}')
-=======
-print(f'Double of number {num} is {num * 2}')
->>>>>>> e98c241 (update testing)
+# testing 2 calculate the hypotenuse 
+X = 5
+y=3
+hyp = (X**2 + y**2)**0.5
+print(f'The hypotenuse of {X} and {y} is {hyp}0.2:f')
