@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Page</title>
+</head>
+
+<body>
+
+<h1>About Page</h1>
+
+<h2>Our Image Gallery</h2>
+
+{% for img in image_list %}
+    <img src="{{ url_for('static', filename=img) }}" width="300">
+{% endfor %}
+
+</body>
+</html>
