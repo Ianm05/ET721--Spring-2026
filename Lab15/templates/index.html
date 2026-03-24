@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Item</title>
+</head>
+<body>
+    <h2>Welcome to Lab 15</h2>
+
+    <!-- ✅ Form -->
+    <form id="itemform">
+        <label>
+            Name:
+            <input type="text" id="name" required>
+        </label>
+        <br><br>
+
+        <label>
+            Price:
+            <input type="number" id="price" required>
+        </label>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <p id="response"></p>
+
+    <!-- ✅ Script -->
+    <script>
+        document.querySelector("#itemform").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // collect values
+            const name = document.querySelector("#name").value;
+            const price = document.querySelector("#price").value;
+
+            try {
+                const res = await fetch("/items", {  // ✅ your Flask route
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        price: Number(price)   // ✅ fixed
+                    })
+                });
+
+                const data = await res.json();
+
+                document.querySelector('#response').innerHTML =
+                    "Response: " + JSON.stringify(data);
+
+            } catch (error) {
+                document.querySelector('#response').innerHTML =
+                    "Response: ERROR " + error;
+            }
+        });
+    </script>
+</body>
+</html>

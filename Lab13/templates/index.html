@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <h1 class="title">Ian Martinez</h1>
+
+    <main class="container">
+        <h2>Add Employee</h2>
+
+        <form method="POST">
+            <div>
+                <label for="employeename">Name:</label>
+                <input type="text" name="name" id="employeename" required>
+            </div>
+
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" name="age" id="age" required>
+            </div>
+
+            <div>
+                <button type="submit">SUBMIT</button>
+            </div>
+
+            <div class="dbmsg">
+                <p>{{ msg }}</p>
+            </div>
+        </form>
+    </main>
+
+    <footer class="footer">
+        Mini form app @ March 2026 - By: Ian Martinez
+    </footer>
+</body>
+</html>
