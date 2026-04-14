@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask To-Do Web App</title>
+
+    <!-- Fixed spacing in filename -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='todo_style.css') }}">
+</head>
+<body>
+    <main>
+        <h1 class="title">My To-Do List by Ian Martinez</h1>
+
+        <input type="text" id="new-task" placeholder="Add a new task...">
+        <button class="btnaddtask" id="add-btn">Add Task</button>
+
+        <!-- Load all tasks -->
+        <ul id="tasklist"></ul>
+    </main>
+
+    <!-- Move script to bottom (good practice) -->
+    <script src="{{ url_for('static', filename='todo_script.js') }}"></script>
+
+    <!-- Safer JS trigger instead of inline onclick -->
+    <script>
+        document.getElementById("add-btn").addEventListener("click", addTask);
+    </script>
+</body>
+</html>
