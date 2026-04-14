@@ -29,15 +29,15 @@ def create_item():
 # READ ALL ITEMS
 @app.route('/items', methods=['GET'])
 def get_items():
-    return jsonify(items), 200   # ✅ fixed missing status
+    return jsonify(items), 200
 
 
-# READ SINGLE ITEM ,UPDATE + DELETE
-@app.route('/items/<item_id>', methods=['GET', 'PUT', 'DELETE'])
-def get_oneitem(item_id):
+# READ SINGLE ITEM + UPDATE
+@app.route('/items/<item_id>', methods=['GET', 'PUT'])
+def handle_item(item_id):
     item = items.get(item_id)
 
-    
+    # GET request
     if request.method == 'GET':
         if not item:
             return jsonify({'error': "Item not found"}), 404
@@ -49,18 +49,27 @@ def get_oneitem(item_id):
             return jsonify({'error': "Item not found"}), 404
 
         data = request.get_json()
-        if not data:
-            return jsonify({'error' :  'Invalid input'}), 400
-        
-        item[item_id] = data 
-        return render_template('update.html', item_id = item_id, item = data)
-    
-    # DELETE
-    elif request.method == "DELETE":
-        item[item_id] = data
-        deleted_item = item.pop(item_id)
-        return render_template('delete.html' , item_id = item_id ,  item = data)
-    
+        items[item_id] = data
+
+        return jsonify({'id': item_id, 'item': data}), 200
+
+
+# ✅ DELETE route (separate and clean)
+@app.route('/items/<item_id>', methods=['DELETE'])
+def delete_item(item_id):
+    if item_id not in items:
+        return jsonify({'error': 'Item not found'}), 404
+
+    del items[item_id]
+
+    return jsonify({'message': 'Item deleted'}), 200
+
+# At the bottom of app.py, add this route (for testing only)
+@app.route('/reset', methods=['POST'])
+def reset():
+    items.clear()
+    return '', 204
+
 
 if __name__ == '__main__':
     app.run(debug=True)

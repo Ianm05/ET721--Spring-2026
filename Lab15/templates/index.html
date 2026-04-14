@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Item</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Welcome to Lab 15</h2>
+    <h2>Ian Martinez's Shopping Page</h2>
 
     <!-- CREATE FORM -->
     <form id="itemform">
@@ -21,18 +22,14 @@
     <ul id="itemslist"></ul>
 
     <!-- UPDATE SECTION -->
-    <section id="updatesection" style="display: none;">
+    <section id="updatesection" style="display:none;">
         <h3>Update Item</h3>
         <input type="hidden" id="updateID">
-        <label>
-         Name: <input type = "text" id = "updateName">
-         </label>
-        
-         <label>
-            Price: <input type="text" id="updatePrice">
-         </label>
 
-         <button onclick="updateItem()">SAVE UPDATE</button>
+        Name: <input type="text" id="updateName"><br><br>
+        Price: <input type="number" id="updatePrice"><br><br>
+
+        <button onclick="updateItem()">Save Update</button>
     </section>
 
     <script>
@@ -57,15 +54,34 @@
 
                 const data = await res.json();
 
-                document.querySelector('#response').innerHTML =
-                    "Response: " + JSON.stringify(data);
+              document.querySelector('#response').innerHTML =
+    `Added: ${data.item.name} ($${data.item.price})`;
 
                 loadItems();
 
             } catch (error) {
                 document.querySelector('#response').innerHTML =
-                    "Response: ERROR " + error;
+                    "ERROR: " + error;
             }
+            async function deleteItem(id) {
+    // ✅ confirmation popup
+    const confirmDelete = confirm("Are you sure you want to delete this item?");
+
+    if (!confirmDelete) return; // cancel if user clicks "Cancel"
+
+    const res = await fetch(`/items/${id}`, {
+        method: "DELETE"
+    });
+
+    const data = await res.json();
+
+    //show confirmation message
+    document.querySelector("#response").innerHTML =
+        data.message;
+
+    loadItems();
+}
+
         });
 
         // LOAD ITEMS
@@ -82,8 +98,8 @@
                 const li = document.createElement("li");
                 li.innerHTML = `
                     ID: ${id} | Name: ${item.name} | Price: ${item.price}
-                    <button onclick ="showUpdateForm('${id}', '${item.name}', '${item.price}')">Update</button>
-                    <button onclick = "deleteitem"('{id}')"> Delete </button>
+                    <button onclick="showUpdateForm('${id}', '${item.name}', '${item.price}')">Update</button>
+                    <button onclick="deleteItem('${id}')">Delete</button>
                 `;
 
                 list.appendChild(li);
@@ -125,10 +141,16 @@
             loadItems();
         }
 
-        // function to remove an item
-        async function deleteitem(id) {
-            const res = await fetch(http://127.0.0.1:5000/items)
+        // DELETE ITEM
+        async function deleteItem(id) {
+            await fetch(`/items/${id}`, {
+                method: "DELETE"
+            });
+
+            loadItems();
         }
+
+        // LOAD ON START
         loadItems();
     </script>
 </body>
