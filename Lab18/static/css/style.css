@@ -1,0 +1,51 @@
+* {box-sizing: border-box;}
+.maincontainer {
+    background-color:  aliceblue;
+    width: 900px;
+    margin:  2rem auto;
+    padding: 2rem;
+}
+.footer{
+    background-color: black;
+    color: red;
+    padding: 2rem;
+    text-align: center;
+}
+/*login.html*/
+.title{
+    text-align: center;
+    color: darkblue;
+
+}
+.form_section{
+    margin-bottom: 1rem;
+}
+.form_section input{
+    padding: 0.5rem;
+    width: 100%;
+    border: none;
+}
+.btn_login:hover, .btn_signup:hover{
+    background-color: darkblue;
+    color: whitesmoke;
+    font-size: 1.2 rem;
+    border:none;
+    border-radius: 8px;
+    padding: 0.5rem  1rem;
+}
+.btn_login:hover{
+    background-color: crimson;
+    font-weight: bolder;
+}
+.signup_div{
+    margin-top: 1rem;
+    color: darkblue;
+}
+.signup_div a{
+    color: green;
+    font-size: 1.1rem;
+}
+.signup_div a:hover{
+    color: crimson;
+    font-weight: bolder;
+}
