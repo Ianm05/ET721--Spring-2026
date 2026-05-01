@@ -18,12 +18,15 @@
     <h2 class="subtitle">Gallery</h2>
     <div class="gallery" id="gallery">
         {% for image in images %}
-            <div class="card">
-                <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="Image">
-            </div>
+        <div class="card" id="image-{{image.id}}">
+                <img src="{{ url_for('static', filename='uploads/' + image.filename)}}" alt="Image">
+              <button type="button" class="btndelete" data-id="{{ image.id }}">
+    Delete
+</button>
+</button>
         {% endfor %}
     </div>
 
-    <script src="{{ url_for('static', filename='imguploader_script.js')}}"></script>
+   <script type="module" src="{{ url_for('static', filename='imguploader_script.js')}}"></script>
 </body>
 </html>
