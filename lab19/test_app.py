@@ -1,3 +1,9 @@
+"""
+Ian Martinez
+May, 5 , 2026
+lab 19: unit test for verifying authentication in a Flask-sQlite app
+"""
+
 import os
 import sqlite3
 import pytest
@@ -25,7 +31,7 @@ def init_test_db():
     conn.commit()
     conn.close()
 
-# create a mock database to run the app.py file\
+# create a mock database to run the app.py file
 @pytest.fixture
 def client(monkeypatch):
     # override database to use test database
@@ -49,43 +55,44 @@ def client(monkeypatch):
     # cleanup test database after tests
     if os.path.exists(TEST_DB):
         os.remove(TEST_DB)
+
 #---------------------------------
-# TEST HOME REDIRENT
+# TEST HOME REDIRECT
 #---------------------------------
 def test_home_redirect(client):
     response = client.get('/')
     assert response.status_code == 302
-    assert 'login' in response.location # response.location means properly redirect to the URL location
+    assert 'login' in response.location
 
 #---------------------------------
 # TEST LOGIN SUCCESS
 #---------------------------------
 def test_login_success(client):
-   # first, create a test user to test the login later
-   client.post('/signup', data={
-         'username': "loginuser",
-         'email': "loginuser@example.com",
-         'password': "123456"
-   })
+    # first, create a test user to test the login later
+    client.post('/signup', data={
+        'username': "loginuser",
+        'email': "loginuser@example.com",
+        'password': "123456"
+    })
 
-   # test the login with the user info above
-   response = client.post('/login', data={
+    # test the login with the user info above
+    response = client.post('/login', data={
         "email": "loginuser@example.com",
         "password": "123456"
-   }, follow_redirects=True)
+    }, follow_redirects=True)
 
-   # assert testing
-   assert response.status_code == 200
-   assert b"Welcome" in response.data
+    assert response.status_code == 200
+    assert b"Welcome" in response.data
+
 #---------------------------------
 # TEST LOGIN FAILURE
 #---------------------------------
 def test_login_failure(client):
-    response  = client.post('/login' , data = {
-        "email" : "login@example.com",
-        "password" : "wrong123"
-    }, follow_redirects = True)
-    
+    response = client.post('/login', data={
+        "email": "login@example.com",
+        "password": "wrong123"
+    }, follow_redirects=True)
+
     assert response.status_code == 200
     assert b"Invalid email or password" in response.data
 
@@ -93,11 +100,11 @@ def test_login_failure(client):
 # TEST SIGNUP
 #---------------------------------
 def test_signup(client):
-    response = client.post('/signup', data ={
-        "username" : "testuser",
-        "email" : "test@example.com",
-        "password" : "123456"
-     }, follow_redirects = True)
+    response = client.post('/signup', data={
+        "username": "testuser",
+        "email": "test@example.com",
+        "password": "123456"
+    }, follow_redirects=True)
 
     assert response.status_code == 200
     assert b"Account created successfully!" in response.data
